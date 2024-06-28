@@ -38,7 +38,10 @@ const validateInput = (matric, name, code) => {
     if (!/^\d{9}$/.test(matric)) {
         errors.push("Matric must be a 9-digit number");
     }
-    if (typeof name !== 'string' || name.length > 100) {
+    if (!/^[a-zA-Z\s-]*$/.test(name)) {
+        errors.push("Name can only contain letters, spaces, and hyphens");
+    }
+    if (typeof name !== 'string' || name.length > 100 ) {
         errors.push("Name must be a string with no more than 100 characters");
     }
     if (typeof code !== 'string' || code.length !== 5) {

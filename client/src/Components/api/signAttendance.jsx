@@ -1,7 +1,8 @@
+// src/api/signAttendance.js
 import { useState } from "react";
 import axios from "axios";
 
-const studentSignIn = () => {
+const useStudentSignIn = () => {
   const [message, setMessage] = useState("");
 
   const registerStudent = async (values) => {
@@ -22,12 +23,22 @@ const studentSignIn = () => {
         setMessage("An unexpected error occurred");
       }
     } catch (error) {
-      const errorMessage = error.response.data.message[0] || "Network Error";
-      setMessage(errorMessage);
+      // Handle errors more explicitly
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        const errorMessage = error.response.data.message[0] || "Bad Request";
+        setMessage(errorMessage);
+      } else if (error.request) {
+        // Request was made but no response was received
+        setMessage("No response from server. Please try again later.");
+      } else {
+        // Something happened in setting up the request
+        setMessage("Error in setting up request.");
+      }
     }
   };
 
   return { message, registerStudent };
 };
 
-export default studentSignIn;
+export default useStudentSignIn;
