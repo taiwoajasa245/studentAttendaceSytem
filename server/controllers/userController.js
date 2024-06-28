@@ -15,7 +15,7 @@ const Sign = async (req, res) => {
         // Check if student has already signed in
         let user = await User.findOne({ matric });
         if (user) {
-            return res.status(400).json({ status: 400, message: ["Attendance Complete, you cannot sign another"] });
+            return res.status(400).json({ status: 400, message: ["Attendance Completed, you cannot sign another"] });
         }
 
         // Find the code in the database

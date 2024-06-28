@@ -1,10 +1,15 @@
-// src/components/AttendanceForm.jsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useStudentSignIn from "../api/signAttendance";
 import { Toaster, toast } from "sonner";
 
 const AttendanceForm = () => {
   const { message, registerStudent } = useStudentSignIn();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    matric: "",
+    code: "",
+  });
 
   const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode
 
@@ -13,13 +18,6 @@ const AttendanceForm = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  const [formData, setFormData] = useState({
-    name: "",
-    matric: "",
-    code: "",
-  });
-
-  // Listen for input values
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -39,22 +37,24 @@ const AttendanceForm = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     if (message) {
-  //       if (message.includes("Recorded")) {
-  //         toast.success(message);
-  //       } else {
-  //         toast.error(message);
-  //       }
-  //     }
-  //   }, [message]);
+  useEffect(() => {
+    if (message) {
+      if (message.includes("Recorded")) {
+        toast.success(message);
+      } else {
+        toast.error(message);
+      }
+    }
+  }, [message]);
 
   return (
     <>
-      <div className={`h-screen flex items-center justify-center ${isDarkMode ? 'bg-gray-900' : 'bg-gray-200'}`}>
+      <div
+        className={`h-screen flex items-center justify-center ${
+          isDarkMode ? "bg-gray-900" : "bg-gray-200"
+        }`}
+      >
         <div className="w-full max-w-xs">
-
-
           <div className="flex justify-end mb-2">
             {/* Dark mode toggle button */}
             <button
@@ -69,20 +69,25 @@ const AttendanceForm = () => {
             </button>
           </div>
 
-
           <form
             onSubmit={handleSubmit}
-            className={`bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ${isDarkMode ? 'darkMode' : 'lightMode'}`}
+            className={`bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ${
+              isDarkMode ? "darkMode" : "lightMode"
+            }`}
           >
             <div className="mb-4">
               <label
-                className={`block text-gray-700 text-sm font-bold mb-2 ${isDarkMode ? 'darkMode' : 'lightMode'}`}
+                className={`block text-gray-700 text-sm font-bold mb-2 ${
+                  isDarkMode ? "darkMode" : "lightMode"
+                }`}
                 htmlFor="name"
               >
                 Name
               </label>
               <input
-                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${isDarkMode ? 'darkModeInput' : 'lightModeInput'}`}
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
+                  isDarkMode ? "darkModeInput" : "lightModeInput"
+                }`}
                 type="text"
                 name="name"
                 id="name"
@@ -95,13 +100,17 @@ const AttendanceForm = () => {
 
             <div className="mb-4">
               <label
-                className={`block text-gray-700 text-sm font-bold mb-2 ${isDarkMode ? 'darkMode' : 'lightMode'}`}
+                className={`block text-gray-700 text-sm font-bold mb-2 ${
+                  isDarkMode ? "darkMode" : "lightMode"
+                }`}
                 htmlFor="matric"
               >
                 Matric Number
               </label>
               <input
-                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${isDarkMode ? 'darkModeInput' : 'lightModeInput'}`}
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
+                  isDarkMode ? "darkModeInput" : "lightModeInput"
+                }`}
                 type="text"
                 name="matric"
                 id="matric"
@@ -116,13 +125,17 @@ const AttendanceForm = () => {
 
             <div className="mb-6">
               <label
-                className={`block text-gray-700 text-sm font-bold mb-2 ${isDarkMode ? 'darkMode' : 'lightMode'}`}
+                className={`block text-gray-700 text-sm font-bold mb-2 ${
+                  isDarkMode ? "darkMode" : "lightMode"
+                }`}
                 htmlFor="code"
               >
                 Code
               </label>
               <input
-                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${isDarkMode ? 'darkModeInput' : 'lightModeInput'}`}
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
+                  isDarkMode ? "darkModeInput" : "lightModeInput"
+                }`}
                 type="text"
                 name="code"
                 id="code"
@@ -136,7 +149,9 @@ const AttendanceForm = () => {
 
             <div className="flex items-center justify-between">
               <button
-                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isDarkMode ? 'darkModeButton' : 'lightModeButton'}`}
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+                  isDarkMode ? "darkModeButton" : "lightModeButton"
+                }`}
                 type="submit"
               >
                 Sign Attendance
@@ -154,6 +169,9 @@ const AttendanceForm = () => {
           </p>
         </div>
       </div>
+
+      {/* Toast notifications */}
+      <Toaster position="top-right" richColors />
     </>
   );
 };
